@@ -4,6 +4,8 @@
 import json
 
 from trac.config import Option
+import pkg_resources
+pkg_resources.require("requests==2.31.0")
 import requests
 
 
