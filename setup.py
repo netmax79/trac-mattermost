@@ -18,7 +18,7 @@ setup(
     packages=find_packages(exclude=["*.tests*"]),
     license="ISC License",
     install_requires=[
-        "requests==2.27.1",
+        "requests==2.21.0",
     ],
     classifiers=[
         "License :: OSI Approved :: ISC License (ISCL)",
