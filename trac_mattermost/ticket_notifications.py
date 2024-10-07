@@ -44,26 +44,28 @@ class TicketNotifications(Component, TracMattermostComponent):
         )
 
     def format_changes(self, ticket, old_values):
-        field_labels = TicketSystem(self.env).get_ticket_fields()
+        # Retrieve ticket fields metadata
+        ticket_fields = TicketSystem(self.env).get_ticket_fields()
+        field_labels = {field['name']: field['label'] for field in ticket_fields}
 
         formatted = []
         for k, v in old_values.items():
             # No changes occurred, this sometimes happens when the user clicks
             # on a field but doesn't change anything.
-            if (v or "") == (ticket[k] or ""):
+            if (v or "") == (ticket.values.get(k) or ""):
                 continue
 
             if not v:
-                f = u"**{0}** set to *{1}*".format(field_labels[k], ticket[k])
-            elif not ticket[k]:
-                f = u"**{0}** unset".format(field_labels[k])
+                f = u"**{0}** set to *{1}*".format(field_labels.get(k, k), ticket.values.get(k))
+            elif not ticket.values.get(k):
+                f = u"**{0}** unset".format(field_labels.get(k, k))
             else:
-                if len(v) > 100 or len(ticket[k]) > 100:
-                    f = u"**{0}** changed".format(field_labels[k])
+                if len(v) > 100 or len(ticket.values.get(k)) > 100:
+                    f = u"**{0}** changed".format(field_labels.get(k, k))
                 else:
                     f = (
                         u"**{0}** changed from *{1}* to *{2}*"
-                        .format(field_labels[k], v, ticket[k])
+                        .format(field_labels.get(k, k), v, ticket.values.get(k))
                     )
             formatted.append(f)
 
