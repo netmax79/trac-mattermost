@@ -19,6 +19,7 @@ setup(
     license="ISC License",
     install_requires=[
         "requests==2.21.0",
+        "certifi<=2020.4.5.1"
     ],
     classifiers=[
         "License :: OSI Approved :: ISC License (ISCL)",
