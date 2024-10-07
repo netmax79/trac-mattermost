@@ -44,7 +44,7 @@ class TicketNotifications(Component, TracMattermostComponent):
         )
 
     def format_changes(self, ticket, old_values):
-        field_labels = TicketSystem(self.env).get_ticket_field_labels()
+        field_labels = TicketSystem(self.env).get_ticket_fields()
 
         formatted = []
         for k, v in old_values.items():
